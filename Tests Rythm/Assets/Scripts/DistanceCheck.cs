@@ -22,8 +22,13 @@ public class DistanceCheck : MonoBehaviour {
     { 
         if (BGMusic.clip !=  MusicToPlay)
         {
-            BGMusic.clip = MusicToPlay;
-            BGMusic.Play();
+            while (BGMusic.volume > 0)
+            {
+                BGMusic.volume -= 0.01f;
+                WaitForSecondsRealtime(0.01);
+            }
+           // BGMusic.clip = MusicToPlay;
+           // BGMusic.Play();
         }
     }
 
