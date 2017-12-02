@@ -22,6 +22,8 @@ public class enigme : MonoBehaviour {
 	private SpriteRenderer enigmaRenderer;
 	private int count=0;
 	private bool kill;
+	string test;
+	bool allButtons;
 	//print(parameters.length);
 	//parameters.length = button.length+Time.length;
 
@@ -65,11 +67,12 @@ public class enigme : MonoBehaviour {
 			}*/
 		
 	}
-
+		
 	void enigma (int[] parameters)
 	{
 		if(Input.GetButtonDown ("1")== true || Input.GetButtonDown ("2")== true ||Input.GetButtonDown ("3")== true || checker==true ){
 			checker = true;
+			allButtons = false;
 			//for (int i = 0; i <= (parameters.Length -1); i+=3) {
 			enigmaRenderer.color = Color.gray;
 			//print (parameters [count]);
@@ -86,8 +89,12 @@ public class enigme : MonoBehaviour {
 				{
 					enigmaRenderer.color = Color.green;
 				}
-
-
+			if(Input.anyKeyDown == true && (parameters [count + 1] / 100) > timerFrames && timerFrames>0 ){
+				checker = false;
+				timerFrames = 0f;
+				count = 0;
+			}
+				
 			if (Input.GetButtonDown (Convert.ToString (parameters [count])) == true && (parameters [count + 1] / 100) < timerFrames && timerFrames < ((parameters [count + 1] + parameters [count + 2]) / 100)) {
 				timerFrames = 0f;
 				if (count == (parameters.Length - 4)) {
@@ -100,20 +107,21 @@ public class enigme : MonoBehaviour {
 				else{
 					kill = true;
 				}
-
 				print (count);
+				allButtons = true;
 			}
-
-			else if (/*EventSystem.current.currentSelectedGameObject.name != Convert.ToString( parameters[i]) || */timerFrames > ((parameters[count+1] + parameters[count+2])/100) ){
-					checker = false;
-					timerFrames = 0f;
-				count = 0;
-				} /*EventSystem.current.currentSelectedGameObject.name retourne le nom du bouton sur lequel t'appuies*/
-			/*else{
+			else if (timerFrames > ((parameters[count+1] + parameters[count+2])/100) ){
 				checker = false;
-				print (checker);
+				timerFrames = 0f;
 				count = 0;
-			}*/
+				allButtons = false;
+			} /*EventSystem.current.currentSelectedGameObject.name retourne le nom du bouton sur lequel t'appuies*/
+			if(Input.anyKeyDown == true &&Input.GetButtonDown (Convert.ToString (parameters [count])) == false && (parameters [count + 1] / 100) < timerFrames && timerFrames < ((parameters [count + 1] + parameters [count + 2]) / 100)) {
+				checker = false;
+				timerFrames = 0f;
+				count = 0;
+				allButtons = false;
+			}
 		}
 	}
 		
@@ -132,6 +140,6 @@ public class enigme : MonoBehaviour {
 			print ("enigme resolue");
 			Destroy (gameObject);
 		}
-	//	print (EventSystem.current.currentSelectedGameObject.name);
+	//print (EventSystem.current.currentSelectedGameObject.name);
 	}
 }
