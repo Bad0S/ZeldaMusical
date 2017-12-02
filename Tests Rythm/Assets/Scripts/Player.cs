@@ -6,10 +6,13 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D body;
 	public float MovSpeed;
 	public PlayerAttack Swing;
-	public PlayerAttack Thrust;
+	public PlayerAttack AttaqueBase;
     public AudioClip SwingSound;
     public AudioClip ThrustSound;
     private AudioSource Source;
+    private float PlayerRot;
+    public float DashSpeed;
+    public bool isDashing;
 
 
 	// Use this for initialization
@@ -22,32 +25,50 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+        body.transform.rotation =Quaternion.Euler (0,0,PlayerRot);
 		float horizontal = Input.GetAxisRaw ("Horizontal");
 		float vertical = Input.GetAxisRaw ("Vertical");
 		body.velocity = new Vector2 (horizontal * MovSpeed, vertical * MovSpeed);
-		Attack ();
+        if (body.velocity.x > 0) { PlayerRot = 270; }
+        if (body.velocity.x < 0) { PlayerRot = 90; }
+        if (body.velocity.y > 0) { PlayerRot = 0; }
+        if (body.velocity.y < 0) { PlayerRot = 180; }
+        Attack ();
 	}
 	void Attack()
 	{
-		if (Input.GetMouseButton (0) == true) 
-		{
-            Source.clip = SwingSound;
-            Source.Play();
-			Swing.gameObject.SetActive (true);
-			StartCoroutine (DisableObject (Swing.gameObject,.1f));
-			return;
-		}
-		if (Input.GetMouseButton (1) == true)
+		if (Input.GetButton ("Fire1") == true) 
 		{
             Source.clip = ThrustSound;
             Source.Play();
-			Thrust.gameObject.SetActive (true);
-			StartCoroutine (DisableObject (Thrust.gameObject,.1f));
-			return;
-		} 
+            AttaqueBase.gameObject.SetActive(true);
+            StartCoroutine(DisableObject(AttaqueBase.gameObject, .1f));
+            return;
+        }
+        if (Input.GetButtonDown ("Fire2") == true)
+        {
+            transform.Translate(Vector3.up * Time.deltaTime * DashSpeed);
+            isDashing = true;
+        }
+        if (Input.GetButtonUp ("Fire2") == true) { isDashing = false; }
+		if (Input.GetButton ("Fire3") == true)
+		{
+            Source.clip = SwingSound;
+            Source.Play();
+            Swing.gameObject.SetActive(true);
+            StartCoroutine(DisableObject(Swing.gameObject, .1f));
+            return;
+        } 
 	}
 
-	IEnumerator DisableObject(GameObject obj, float time)
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag =="Enemy" && isDashing == true)
+        {
+            Destroy(other.gameObject);
+        }
+    }
+    IEnumerator DisableObject(GameObject obj, float time)
 	{
 		yield return new WaitForSeconds(time);
 		obj.SetActive (false);

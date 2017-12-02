@@ -25,7 +25,7 @@ public class DistanceCheck : MonoBehaviour {
             while (BGMusic.volume > 0)
             {
                 BGMusic.volume -= 0.01f;
-                WaitForSecondsRealtime(0.01);
+                // WaitForSecondsRealtime(0.01);
             }
            // BGMusic.clip = MusicToPlay;
            // BGMusic.Play();

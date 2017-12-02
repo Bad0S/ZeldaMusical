@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+    public Player player;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -17,7 +19,7 @@ public class Enemy : MonoBehaviour {
 
     void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "Player") 
+		if (other.tag == "Player" && player.isDashing == false ) 
 		{
 			Destroy (other.gameObject);
 		}
