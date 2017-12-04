@@ -70,6 +70,7 @@ public class enigme : MonoBehaviour {
 		
 	void enigma (int[] parameters)
 	{
+		// la ligne ci-dessus défnit les conditions d'activation de l'énigme, c'est ici qu'il faut rajouter les distances
 		if(Input.GetButtonDown ("1")== true || Input.GetButtonDown ("2")== true ||Input.GetButtonDown ("3")== true || checker==true ){
 			checker = true;
 			allButtons = false;
