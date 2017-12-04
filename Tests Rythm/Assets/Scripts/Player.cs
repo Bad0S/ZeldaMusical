@@ -34,6 +34,8 @@ public class Player : MonoBehaviour {
         if (body.velocity.y > 0) { PlayerRot = 0; }
         if (body.velocity.y < 0) { PlayerRot = 180; }
         Attack ();
+        if ((body.velocity.x != 0) || (body.velocity.y != 0)) {Source.mute = false;}
+        else { Source.mute = true; }
 	}
 	void Attack()
 	{
