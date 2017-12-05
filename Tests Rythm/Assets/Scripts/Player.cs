@@ -41,8 +41,8 @@ public class Player : MonoBehaviour {
 	{
 		if (Input.GetButton ("Fire1") == true) 
 		{
-            Source.clip = ThrustSound;
-            Source.Play();
+           // Source.clip = ThrustSound;
+           // Source.Play();
             AttaqueBase.gameObject.SetActive(true);
             StartCoroutine(DisableObject(AttaqueBase.gameObject, .1f));
             return;
@@ -55,8 +55,8 @@ public class Player : MonoBehaviour {
         if (Input.GetButtonUp ("Fire2") == true) { isDashing = false; }
 		if (Input.GetButton ("Fire3") == true)
 		{
-            Source.clip = SwingSound;
-            Source.Play();
+           // Source.clip = SwingSound;
+           // Source.Play();
             Swing.gameObject.SetActive(true);
             StartCoroutine(DisableObject(Swing.gameObject, .1f));
             return;
