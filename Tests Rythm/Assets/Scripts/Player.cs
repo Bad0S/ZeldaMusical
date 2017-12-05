@@ -7,19 +7,21 @@ public class Player : MonoBehaviour {
 	public float MovSpeed;
 	public PlayerAttack Swing;
 	public PlayerAttack AttaqueBase;
-    public AudioClip SwingSound;
-    public AudioClip ThrustSound;
+    public AudioClip BaseAttackSound;
+    public AudioClip HalfCircleAttackSound;
+    public AudioClip DashAttackSound;
     private AudioSource Source;
     private float PlayerRot;
     public float DashSpeed;
     public bool isDashing;
+    public AudioSource[] audioSource;
 
 
 	// Use this for initialization
 	void Start () 
 	{
 		body = GetComponent<Rigidbody2D> ();
-        Source = GetComponent<AudioSource>();
+        audioSource = GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -34,33 +36,85 @@ public class Player : MonoBehaviour {
         if (body.velocity.y > 0) { PlayerRot = 0; }
         if (body.velocity.y < 0) { PlayerRot = 180; }
         Attack ();
-        if ((body.velocity.x != 0) || (body.velocity.y != 0)) {Source.mute = false;}
-        else { Source.mute = true; }
+        if ((body.velocity.x != 0) || (body.velocity.y != 0))
+        {
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 128)
+                {
+                    source.mute = false;
+                }
+            }
+        }
+        else
+        {
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 128)
+                {
+                    source.mute = true;
+                }
+            }
+        }
 	}
 	void Attack()
 	{
 		if (Input.GetButton ("Fire1") == true) 
 		{
-           // Source.clip = ThrustSound;
-           // Source.Play();
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 129)
+                {
+                    source.clip = BaseAttackSound;
+                    source.Play();
+                }
+            }
             AttaqueBase.gameObject.SetActive(true);
             StartCoroutine(DisableObject(AttaqueBase.gameObject, .1f));
             return;
         }
         if (Input.GetButtonDown ("Fire2") == true)
         {
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 129)
+                {
+                    source.clip = DashAttackSound;
+                    source.Play();
+                }
+            }
             transform.Translate(Vector3.up * Time.deltaTime * DashSpeed);
             isDashing = true;
         }
         if (Input.GetButtonUp ("Fire2") == true) { isDashing = false; }
 		if (Input.GetButton ("Fire3") == true)
 		{
-           // Source.clip = SwingSound;
-           // Source.Play();
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 129)
+                {
+                    source.clip = HalfCircleAttackSound;
+                    source.Play();
+                    for (float fl = -1.0f; fl < 1.0f;fl ++)
+                    {
+                        source.panStereo = fl;
+                    }
+                }
+            }
             Swing.gameObject.SetActive(true);
             StartCoroutine(DisableObject(Swing.gameObject, .1f));
             return;
-        } 
+        }
+        if (Input.GetButtonUp ("Fire3") == true)
+        {
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 129)
+                {
+                    source.panStereo = 0.0f;
+                }
+            }
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D other)

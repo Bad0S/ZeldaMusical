@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 576779430}
   - component: {fileID: 576779429}
   - component: {fileID: 576779431}
+  - component: {fileID: 576779432}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -257,10 +258,13 @@ MonoBehaviour:
   MovSpeed: 6
   Swing: {fileID: 1947758124}
   AttaqueBase: {fileID: 539034147}
-  SwingSound: {fileID: 8300000, guid: 0fea2fe76a1de72499b29bc8189c054d, type: 3}
-  ThrustSound: {fileID: 8300000, guid: 0020dafbd82d41849bdce144c971298e, type: 3}
+  BaseAttackSound: {fileID: 8300000, guid: 52a3672546a0c7442b20a770b8406ea5, type: 3}
+  HalfCircleAttackSound: {fileID: 8300000, guid: 6154e59f722af684abbf08b3c4fa268d,
+    type: 3}
+  DashAttackSound: {fileID: 8300000, guid: 5e842de49cf50d648b2e2e3e8850dc46, type: 3}
   DashSpeed: 90
   isDashing: 0
+  audioSource: []
 --- !u!212 &576779427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -383,6 +387,86 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!82 &576779432
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 576779425}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 129
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
