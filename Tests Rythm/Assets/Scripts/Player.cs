@@ -15,18 +15,13 @@ public class Player : MonoBehaviour {
     public float DashSpeed;
     public bool isDashing;
     public AudioSource[] audioSource;
-	private float dashTimer = 2f;
-	private Animator anim;
-	private SpriteRenderer renderer;
 
 
 	// Use this for initialization
 	void Start () 
 	{
 		body = GetComponent<Rigidbody2D> ();
-        audioSource = GetComponents<AudioSource> ();
-		anim = GetComponent<Animator> ();
-		renderer = GetComponent <SpriteRenderer> ();
+        audioSource = GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -40,7 +35,6 @@ public class Player : MonoBehaviour {
         if (body.velocity.x < 0) { PlayerRot = 90; }
         if (body.velocity.y > 0) { PlayerRot = 0; }
         if (body.velocity.y < 0) { PlayerRot = 180; }
-		dashTimer += Time.deltaTime;
         Attack ();
         if ((body.velocity.x != 0) || (body.velocity.y != 0))
         {
@@ -79,34 +73,7 @@ public class Player : MonoBehaviour {
             StartCoroutine(DisableObject(AttaqueBase.gameObject, .1f));
             return;
         }
-
-		if (Input.GetButtonDown ("Fire2") == true)
-		{
-			foreach (AudioSource source in audioSource)
-			{
-				if (source.priority == 129)
-				{
-					source.clip = HalfCircleAttackSound;
-					source.Play ();
-					anim.SetTrigger("soundPan");
-				}
-			}
-			Swing.gameObject.SetActive(true);
-			StartCoroutine(DisableObject(Swing.gameObject, .1f));
-			return;
-		}
-		if (Input.GetButtonUp ("Fire2") == true)
-		{
-			foreach (AudioSource source in audioSource)
-			{
-				if (source.priority == 129)
-				{
-					source.panStereo = 0.0f;
-				}
-			}
-		}
-
-		if (Input.GetButtonDown ("Fire3") == true && dashTimer >= 2f)
+        if (Input.GetButtonDown ("Fire2") == true)
         {
             foreach (AudioSource source in audioSource)
             {
@@ -116,13 +83,38 @@ public class Player : MonoBehaviour {
                     source.Play();
                 }
             }
-			renderer.color = Color.yellow;
-			transform.Translate(Vector3.up * Time.deltaTime * DashSpeed);
+            transform.Translate(Vector3.up * Time.deltaTime * DashSpeed);
             isDashing = true;
-			dashTimer = 0f;
         }
-		if (Input.GetButtonUp ("Fire3") == true) {isDashing = false;}
-		if (dashTimer >= 2f) { renderer.color = Color.white; }
+        if (Input.GetButtonUp ("Fire2") == true) { isDashing = false; }
+		if (Input.GetButton ("Fire3") == true)
+		{
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 129)
+                {
+                    source.clip = HalfCircleAttackSound;
+                    source.Play();
+                    for (float fl = -1.0f; fl < 1.0f;fl ++)
+                    {
+                        source.panStereo = fl;
+                    }
+                }
+            }
+            Swing.gameObject.SetActive(true);
+            StartCoroutine(DisableObject(Swing.gameObject, .1f));
+            return;
+        }
+        if (Input.GetButtonUp ("Fire3") == true)
+        {
+            foreach (AudioSource source in audioSource)
+            {
+                if (source.priority == 129)
+                {
+                    source.panStereo = 0.0f;
+                }
+            }
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
