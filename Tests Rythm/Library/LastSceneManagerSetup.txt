@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/enigme.unity
+- path: Assets/combo heal.unity
   isLoaded: 1
   isActive: 1
