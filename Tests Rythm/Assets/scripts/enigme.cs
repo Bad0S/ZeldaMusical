@@ -23,7 +23,7 @@ public class enigme : MonoBehaviour {
 	private int count=0;
 	private bool kill;
 	string test;
-	bool allButtons;
+	public static bool enigmaActivated = false;
 	//print(parameters.length);
 	//parameters.length = button.length+Time.length;
 
@@ -70,10 +70,8 @@ public class enigme : MonoBehaviour {
 		
 	void enigma (int[] parameters)
 	{
-		// la ligne ci-dessus défnit les conditions d'activation de l'énigme, c'est ici qu'il faut rajouter les distances
 		if(Input.GetButtonDown ("1")== true || Input.GetButtonDown ("2")== true ||Input.GetButtonDown ("3")== true || checker==true ){
 			checker = true;
-			allButtons = false;
 			//for (int i = 0; i <= (parameters.Length -1); i+=3) {
 			enigmaRenderer.color = Color.gray;
 			//print (parameters [count]);
@@ -109,27 +107,26 @@ public class enigme : MonoBehaviour {
 					kill = true;
 				}
 				print (count);
-				allButtons = true;
 			}
 			else if (timerFrames > ((parameters[count+1] + parameters[count+2])/100) ){
 				checker = false;
 				timerFrames = 0f;
 				count = 0;
-				allButtons = false;
 			} /*EventSystem.current.currentSelectedGameObject.name retourne le nom du bouton sur lequel t'appuies*/
 			if(Input.anyKeyDown == true &&Input.GetButtonDown (Convert.ToString (parameters [count])) == false && (parameters [count + 1] / 100) < timerFrames && timerFrames < ((parameters [count + 1] + parameters [count + 2]) / 100)) {
 				checker = false;
 				timerFrames = 0f;
 				count = 0;
-				allButtons = false;
 			}
 		}
 	}
 		
 	// Update is called once per frame
 	void Update () 
-	{
-		enigma (parameters);
+	{	
+		if (enigmaActivated == true) {
+			enigma (parameters);
+		}
 		if (checker == true){
 			timerFrames += Time.deltaTime;
 			//print (timerFrames);
@@ -139,6 +136,7 @@ public class enigme : MonoBehaviour {
 		}
 		if (kill == true) {
 			print ("enigme resolue");
+			block.kill = true;
 			Destroy (gameObject);
 		}
 	//print (EventSystem.current.currentSelectedGameObject.name);
