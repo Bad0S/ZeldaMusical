@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
     private float PlayerRot;
     public float DashSpeed;
     public bool isDashing;
-
+	public float damageDash = 0.35f;
 
 	// Use this for initialization
 	void Start () 
@@ -62,18 +62,17 @@ public class Player : MonoBehaviour {
             return;
         } 
 	}
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag =="Enemy" && isDashing == true)
         {
-            Destroy(other.gameObject);
+			other.GetComponent <health>().Hurt(damageDash);
         }
-		if(other.tag == "Door"){
-			enigme.enigmaActivated = true;
-		}
-		if (other.tag == "DoorEnemy"){
+		if (other.name == "EnigmaRoom")
+			enigme.entered = true;
+		if (other.name == "EnemyMainRoom")
 			EnemyMoveBehaviour.detected = true;
-		}
     }
     IEnumerator DisableObject(GameObject obj, float time)
 	{

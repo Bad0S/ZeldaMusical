@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour {
-
+	public float damage= 0.7f;
 	// Use this for initialization
 	void Start () {
 		
@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour {
 	{
 		if (other.tag == "Enemy") 
 		{
-			Destroy (other.gameObject);
+			other.GetComponent <health>().Hurt(damage);
 		}
 	}
 }

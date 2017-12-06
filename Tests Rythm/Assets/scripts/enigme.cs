@@ -23,12 +23,7 @@ public class enigme : MonoBehaviour {
 	private int count=0;
 	private bool kill;
 	string test;
-	public static bool enigmaActivated = false;
-	//print(parameters.length);
-	//parameters.length = button.length+Time.length;
-
-	//for (i = button.length+Time.length
-		
+	public static bool entered;
 
 	// Use this for initialization
 	void Start () 
@@ -36,13 +31,8 @@ public class enigme : MonoBehaviour {
 		enigmaRenderer = GetComponent<SpriteRenderer> ();
 		// GetComponent<SpriteRenderer>().color = new Color(1,0,0) change la couleur du sprite, ici en rouge
 		parameters = new int[button.Length + timeStarting.Length + timeFrame.Length];
-		//parameters = new int[button.Length+time.Length];
 		print (parameters.Length);
-		/*for (int i=0; i<= 3; i++ )
-		{
-			print (i); 
-		}*/
-			
+
 		for (int i = 0; i < parameters.Length; i++) {
 			if (switcher == 2) {
 				parameters [i] = timeFrame [Mathf.FloorToInt (i / 3)];
@@ -62,10 +52,6 @@ public class enigme : MonoBehaviour {
 				continue;
 			}
 		}
-	/*	for (int i = 0; i < parameters.Length; i++) {
-				print (parameters [i]);
-			}*/
-		
 	}
 		
 	void enigma (int[] parameters)
@@ -123,8 +109,8 @@ public class enigme : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () 
-	{	
-		if (enigmaActivated == true) {
+	{
+		if (entered == true) {
 			enigma (parameters);
 		}
 		if (checker == true){
@@ -136,7 +122,6 @@ public class enigme : MonoBehaviour {
 		}
 		if (kill == true) {
 			print ("enigme resolue");
-			block.kill = true;
 			Destroy (gameObject);
 		}
 	//print (EventSystem.current.currentSelectedGameObject.name);
