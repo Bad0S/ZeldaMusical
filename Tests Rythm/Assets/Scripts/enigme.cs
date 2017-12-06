@@ -24,25 +24,13 @@ public class enigme : MonoBehaviour {
 	private bool kill;
 	string test;
 	bool allButtons;
-	//print(parameters.length);
-	//parameters.length = button.length+Time.length;
-
-	//for (i = button.length+Time.length
-		
 
 	// Use this for initialization
 	void Start () 
 	{
 		enigmaRenderer = GetComponent<SpriteRenderer> ();
 		// GetComponent<SpriteRenderer>().color = new Color(1,0,0) change la couleur du sprite, ici en rouge
-		parameters = new int[button.Length + timeStarting.Length + timeFrame.Length];
-		//parameters = new int[button.Length+time.Length];
-		print (parameters.Length);
-		/*for (int i=0; i<= 3; i++ )
-		{
-			print (i); 
-		}*/
-			
+		parameters = new int[button.Length + timeStarting.Length + timeFrame.Length];			
 		for (int i = 0; i < parameters.Length; i++) {
 			if (switcher == 2) {
 				parameters [i] = timeFrame [Mathf.FloorToInt (i / 3)];
@@ -62,10 +50,6 @@ public class enigme : MonoBehaviour {
 				continue;
 			}
 		}
-	/*	for (int i = 0; i < parameters.Length; i++) {
-				print (parameters [i]);
-			}*/
-		
 	}
 		
 	void enigma (int[] parameters)
